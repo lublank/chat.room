@@ -1,0 +1,27 @@
+[
+  {
+    "mid": "global",
+    "name": "全部",
+    "order": 1
+  },
+  {
+    "mid": "study",
+    "name": "学习",
+    "order": 2
+  },
+  {
+    "mid": "game",
+    "name": "游戏",
+    "order": 3
+  },
+  {
+    "mid": "movie",
+    "name": "电影",
+    "order": 4
+  },
+  {
+    "mid": "music",
+    "name": "音乐",
+    "order": 5
+  }
+]

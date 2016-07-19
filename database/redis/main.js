@@ -1,0 +1,87 @@
+"use strict";
+
+module.exports = function(redisClient, module) {
+
+	module.flushdb = function(callback) {
+		redisClient.send_command('flushdb', [], function(err) {
+			if (typeof callback === 'function') {
+				callback(err);
+			}
+		});
+	};
+
+	module.info = function(callback) {
+		redisClient.info(function (err, data) {
+			if(err) {
+				return callback(err);
+			}
+
+			var lines = data.toString().split("\r\n").sort();
+			var redisData = {};
+			lines.forEach(function (line) {
+				var parts = line.split(':');
+				if (parts[1]) {
+					redisData[parts[0]] = parts[1];
+				}
+			});
+
+			redisData.raw = JSON.stringify(redisData, null, 4);
+			redisData.redis = true;
+
+			callback(null, redisData);
+		});
+	};
+	
+	module.exists = function(key, callback) {
+		redisClient.exists(key, function(err, exists) {
+			callback(err, exists === 1);
+		});
+	};
+
+	module.delete = function(key, callback) {
+		callback = callback || function() {};
+		redisClient.del(key, function(err, res) {
+			callback(err);
+		});
+	};
+
+	module.deleteAll = function(keys, callback) {
+		var multi = redisClient.multi();
+		for(var i=0; i<keys.length; ++i) {
+			multi.del(keys[i]);
+		}
+		multi.exec(callback);
+	};
+
+	module.get = function(key, callback) {
+		redisClient.get(key, callback);
+	};
+
+	module.set = function(key, value, callback) {
+		redisClient.set(key, value, callback);
+	};
+
+	module.increment = function(key, callback) {
+		redisClient.incr(key, callback);
+	};
+
+	module.rename = function(oldKey, newKey, callback) {
+		redisClient.rename(oldKey, newKey, callback);
+	};
+
+	module.expire = function(key, seconds, callback) {
+		redisClient.expire(key, seconds, callback);
+	};
+
+	module.expireAt = function(key, timestamp, callback) {
+		redisClient.expireat(key, timestamp, callback);
+	};
+
+	module.pexpire = function(key, ms, callback) {
+		redisClient.pexpire(key, ms, callback);
+	};
+
+	module.pexpireAt = function(key, timestamp, callback) {
+		redisClient.pexpireat(key, timestamp, callback);
+	};
+};

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="基于V8引擎Node.js Web在线聊天室">
+    <title>多功能聊天室</title>
+    <link rel="stylesheet" href="/dist/css/all.css">
+    <script src="/dist/js/all.js"></script>
+    <script src="/dist/js/chat.js"></script>
+</head>
+<body>
+  <div class="chat-container">
+      <div class="wrapper">
+          <div class="top-nav">
+              <div class="custom-select">
+                  <p class="select-header">
+                      <span class="channel-p">全部聊天频道</span>
+                      <i class="ico-dropdown"></i>
+                  </p>
+                  <label>
+                      <select class="channel-room">
+                          <%if(rooms.length){
+                            rooms.forEach(function(room){%>
+                            <option value="<%= room.ename %>"><%= room.cname %>聊天频道</option>
+                          <%})
+                          }else{%>
+                          <option value="">聊天频道</option>
+                          <%}%>
+                      </select>
+                  </label>
+              </div>
+              <div class="login-status">
+                  <label><span class="onlinecount" style="line-height: 1.3;padding: .6em 1em .5em 0;display: inline-block;">当前在线人数：</span></label>
+                  <%
+                  if(user.uid){
+                  %>
+                  <label><a id="user_info" href="javascript:" data-uid="<%=user.uid%>"><%=user.name%></a></label>
+                  <label><a id="click_logout" href="/user/logout" title="退出">退出</a></label>
+                  <%} else {%>
+                  <label><a id="click_login" href="javascript:" title="登录">登录</a></label>
+                  <%}%>
+              </div>
+          </div>
+          <div class="main-win">
+              <div class="chat-list">
+                  <div class="fancy-scrollbar" id="msg-list">
+
+                      <%chats.forEach(function(chat){
+                          chat = JSON.parse(chat);%>
+                          <div data-id="<%=chat.userid%>" class="chat-section">
+
+                                  <%if(chat.username == user.name){%>
+                                  <font class="n is-own <%= chat.role < 2 ? 'admin' : 'no-admin' %>">
+                                      <span>我（<%= user.name %>）：</span>
+                                  </font>
+                                  <%}else{%>
+                                  <font class="n no-own <%=chat.role<2?'admin':'no-admin'%>">
+                                    <a href="javascript:" ><%= chat.username %>：</a>
+                                  </font>
+                                  <%}%>
+                              <div class="chat-content"><%- chat.content %></div>
+                          </div>
+                      <%})%>
+                  </div>
+              </div>
+              <div class="chat-input">
+                  <div class="input-col input-emoji">
+                      <a id="btn-emoji" class="btns btn-emoji" ></a>
+                      <div id="emoji-container" class="emoji-container fancy-scrollbar clearfix ng-hide" style="height: 300px; width: 325px;">
+                          <%for(var i = 0; i < emoji; ++i){%>
+                          <a class="emoji-item" data-id="<%=i%>">
+                              <img src="/images/emoji/<%=i%>.png" />
+                          </a>
+                          <%}%>
+                      </div>
+                  </div>
+                  <div class="input-col input-text">
+                      <!--<input class="editor" id="input-textarea" autocomplete="off" placeholder="限140个字符和表情，回车提交" />-->
+                      <textarea name="form-text" class="editor" id="textarea-input" rows="1" placeholder="限140个字符和表情，回车提交"></textarea>
+                  </div>
+                  <div class="input-col input-btn">
+                      <a class="btns btn-text btn-send active" id="chat_btn" href="javascript:" title="发送" >发送</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="login-container">
+      <a href="javascript:" class="btn-close" id="close-x" title="关闭">x</a>
+      <div class="form-main">
+          <div class="login-wrap">
+              <form class="login-form" method="post">
+                  <div class="con-top clearfix">
+                      <a href="javascript:" class="switch-label left on">登 录</a>
+                      <a href="javascript:" class="switch-label right">注 册</a>
+                  </div>
+                  <div class="form-body">
+                      <div class="form-group">
+                          <span class="user-icon"></span>
+                          <input type="text" id="userid" name="account" autocomplete="off" placeholder="输入账号">
+                      </div>
+                      <div class="form-group">
+                          <span class="pwd-icon"></span>
+                          <input type="password" id="pwd" name="password" autocomplete="off" placeholder="输入密码">
+                      </div>
+                      <div class="form-group confirm-pwd">
+                          <span class="pwd-icon"></span>
+                          <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="off" placeholder="再次输入密码">
+                      </div>
+                      <div class="form-group">
+                          <span class="code-icon"></span>
+                          <input type="text" id="vdcode" name="code" autocomplete="off" placeholder="验证码">
+                          <img src="/captcha/code" id="verify-code" alt="验证码" title="看不清？点击刷新试试">
+                      </div>
+                      <input type="hidden" class="category">
+                  </div>
+                  <p class="show-msg">错误提示信息</p>
+                  <ul>
+                      <li class="submit-login">
+                          <button id="btn_login" name="btn-login" type="submit">登 录</button>
+                      </li>
+                  </ul>
+              </form>
+          </div>
+      </div>
+  </div>
+  <div id="contextMenu">
+      <ul class="dropDown"></ul>
+  </div>
+  <div class="shadow-bg"></div>
+  <script type="text/javascript">
+      window.userinfo = {};
+      userinfo = {
+          "uid" : "<%=user.uid%>",
+          "name" : "<%=user.name%>",
+          "role" : "<%=user.isAdmin%>"
+      };
+
+  </script>
+  </body>
+</html>

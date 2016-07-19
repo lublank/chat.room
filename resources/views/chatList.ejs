@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>多功能聊天室</title>
+    <link rel="stylesheet" href="<%=data.relative_path%>/dist/css/all.css">
+    <script src="<%=data.relative_path%>/dist/js/all.js"></script>
+    <script src="<%=data.relative_path%>/dist/js/list.js"></script>
+</head>
+<body>
+    <div id="chat_list" class="container">
+        <h3>用户聊天列表</h3>
+        <table class="chat-table table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="col-1">账号</th>
+                <th class="col-2">时间</th>
+                <th class="col-3">房间</th>
+                <th class="col-4">内容</th>
+                <th class="col-5">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%chats.forEach(function(chat){%>
+            <tr>
+                <td><%= chat.username%></td>
+                <td><%= chat.time %></td>
+                <td><%= chat.room %></td>
+                <td><%- chat.content %></td>
+                <td data-uid="<%- chat.userid %>" data-tid="<%- chat.id %>" data-room="<%- chat.room %>"><a href="javascript:" class="ban">禁言</a>&nbsp;&nbsp;<a href="javascript:" class="delete">删除</a></td>
+            </tr>
+            <%})%>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

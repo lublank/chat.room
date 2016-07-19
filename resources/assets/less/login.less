@@ -1,0 +1,175 @@
+.login-container {
+  display: none;
+  width: 400px;
+  background: #FFF;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-left: -200px;
+  margin-top: -150px;
+  border-radius: 3px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform: scale(3);
+  -moz-transform: scale(3);
+  -ms-transform: scale(3);
+  -o-transform: scale(3);
+  transform: scale(3);
+  z-index: 1211;
+}
+
+.container-on{
+  display: block;
+  transition: transform 2s;
+  -moz-transition: transform 2s; /* Firefox 4 */
+  -webkit-transition: transform 2s; /* Safari 和 Chrome */
+  -o-transition: transform 2s; /* Opera */
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
+
+.shadow-bg {
+  display: none;
+  background: #000;
+  width: 100%;;
+  height: 100%;
+  position: fixed;
+  z-index: 1210;
+  left: 0;
+  top: 0;
+  opacity: 0.6;
+}
+
+.btn-close{
+  width: 10px;
+  height: 10px;
+  line-height: 10px;
+  right: 0;
+  top: 0;
+  position: absolute;
+  cursor: pointer;
+  z-index: 3;
+  color: #555;
+  padding: 8px;
+  font-size: 18px;
+}
+
+.form-main {
+  padding: 20px;
+}
+
+.con-top {
+  clear: both;
+  .left, .right{
+    float: left;
+    width: 180px;
+    color: #999;
+    font-size: 18px;
+    padding-top: 10px;
+    text-decoration: none;
+    text-align: center;
+    border-bottom: 2px solid #dedede;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .on {
+    color: #333;
+    border-bottom: 2px solid #2e558e;
+  }
+}
+.form-body {
+  margin-top: 30px;
+
+  .form-group {
+    margin-bottom: 20px;
+
+    .user-icon {
+      float: left;
+      width: 36px;
+      height: 35px;
+      background: url(/images/user-icon.jpg) left top no-repeat;
+    }
+    .pwd-icon {
+      float: left;
+      width: 36px;
+      height: 35px;
+      background: url(/images/mima-icon.jpg) left top no-repeat;
+    }
+    .code-icon {
+      float: left;
+      width: 36px;
+      height: 35px;
+      background: url(/images/yzmz-icon.jpg) left top no-repeat;
+    }
+    input {
+      padding: 0 0 0 7px;
+      width: 312px;
+      height: 33px;
+      border: 1px solid #dedede;
+      color: #999;
+      font-size: 14px;
+      outline: 0;
+      -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+
+      &:focus {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+      }
+    }
+
+    #vdcode {
+      width: 200px;
+    }
+    img {
+      width: 100px;
+      height: 35px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+}
+
+.submit-login, .submit-register {
+  text-align: center;
+
+  button {
+    width: 100%;
+    height: 44px;
+    background: #2e558e;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    border: 0;
+    outline: none;
+
+    &:hover {
+      background: #3E6FB7;
+    }
+  }
+}
+
+.confirm-pwd {
+  display: none;
+}
+.show-msg {
+  display: none;
+  border: 1px dashed #FD8888;
+  color: #FF3F3F;
+  background: #FFF0F0;
+  margin-bottom: 10px;
+  padding: 5px;
+}

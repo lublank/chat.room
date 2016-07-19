@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>多功能聊天室</title>
+    <link rel="stylesheet" href="/dist/css/all.css">
+    <script src="/dist/js/all.js"></script>
+    <script src="/dist/js/rooms.js"></script>
+</head>
+<body>
+    <div class="container room-content" style="margin-top: 20px;">
+        <form class="form-inline" id="form-room">
+            <span>新增房间：</span>
+            <input type="text" name="enName" class="form-control" placeholder="房间英文名">
+            <input type="text" name="cnName" class="form-control" placeholder="房间中文名">
+            <button type="submit" class="btn btn-default add">添加</button>
+        </form>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>英文名称</th>
+                <th>中文名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+            if(rooms.length){
+            for(var i=0; i<rooms.length; i++){%>
+                <tr>
+                    <td><%= i+1 %></td>
+                    <td><%= rooms[i].ename%></td>
+                    <td><%= rooms[i].cname%></td>
+                    <td><a href="javascript:" class="delete" data-rid="<%= rooms[i].ename%>">删除</a></td>
+                </tr>
+            <%}
+            }else{%>
+                <tr>
+                    <td colspan="4">暂无内容</td>
+                </tr>
+            <%}%>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
