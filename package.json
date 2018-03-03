@@ -24,7 +24,7 @@
     "crypto": "0.0.3",
     "csurf": "^1.8.3",
     "debug": "~2.2.0",
-    "ejs": "~2.3.3",
+    "ejs": "~2.5.7",
     "express": "~4.13.1",
     "express-session": "^1.13.0",
     "express-validator": "^2.19.1",
